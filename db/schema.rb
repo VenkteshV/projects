@@ -10,10 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170205151954) do
+ActiveRecord::Schema.define(version: 20170205184739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "audits", force: :cascade do |t|
+    t.integer  "task_id"
+    t.string   "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_audits_on_task_id", using: :btree
+  end
+
+  create_table "money_bags", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "credit"
+    t.integer  "expenses"
+    t.integer  "remaining_amt"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["user_id"], name: "index_money_bags_on_user_id", using: :btree
+  end
 
   create_table "order_items", force: :cascade do |t|
     t.integer  "item_total"
@@ -49,6 +67,14 @@ ActiveRecord::Schema.define(version: 20170205151954) do
     t.index ["product_category_id"], name: "index_products_on_product_category_id", using: :btree
   end
 
+  create_table "tasks", force: :cascade do |t|
+    t.string   "name"
+    t.string   "rule"
+    t.string   "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -66,6 +92,8 @@ ActiveRecord::Schema.define(version: 20170205151954) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "audits", "tasks"
+  add_foreign_key "money_bags", "users"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "users"
