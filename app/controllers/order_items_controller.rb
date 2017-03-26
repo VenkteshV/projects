@@ -24,6 +24,11 @@ class OrderItemsController < ApplicationController
     end
   end
 
+  def create_bulk
+   #Rails.logger.debug "params---#{params.inspect}---items #{params.first}-JS--#{params[:_json]}"
+   render json: OrderItem.bulk_create(params[:_json])
+  end
+
   # PATCH/PUT /order_items/1
   def update
     if @order_item.update(order_item_params)
@@ -47,5 +52,6 @@ class OrderItemsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def order_item_params
       params.fetch(:order_item, {})
+      params.require(:order_item).permit(:order_id, :item_total, :product_id)
     end
 end
