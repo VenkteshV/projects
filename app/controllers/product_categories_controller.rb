@@ -3,10 +3,17 @@ class ProductCategoriesController < ApplicationController
 
   # GET /product_categories
   def index
-    @product_categories = ProductCategory.all
+    @product_categories = ProductCategory.where("ancestry is NULL")
 
     render json: @product_categories
   end
+# GET /product_categories/1/show_sub_category
+  def show_sub_category
+     @product_categories = ProductCategory.where(:ancestry => params[:id])
+     render json: @product_categories
+  end
+
+
 
   # GET /product_categories/1
   def show
@@ -47,5 +54,6 @@ class ProductCategoriesController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def product_category_params
       params.fetch(:product_category, {})
+       params.require(:product_category).permit(:name, :image_url, :redirect_url)
     end
 end
