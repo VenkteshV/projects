@@ -13,6 +13,11 @@ class ProductsController < ApplicationController
     render json: @product
   end
 
+  #GET/products/1/show_products
+  def show_products
+    @req_category_products=Product.where('quantity!=0').where(:product_category_id=>params[:id])
+    render json: @req_category_products
+  end
   # POST /products
   def create
     @product = Product.new(product_params)
@@ -33,6 +38,12 @@ class ProductsController < ApplicationController
     end
   end
 
+  def update_quantity
+    product=Product.where(:id=>params[:id]).first
+    @updated=Product.update(params[:id],:quantity=>product.quantity+1)
+    render json: @updated
+  end
+
   # DELETE /products/1
   def destroy
     @product.destroy
@@ -47,5 +58,6 @@ class ProductsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def product_params
       params.fetch(:product, {})
+      params.require(:product).permit(:name, :product_category_id,:quantity)
     end
 end

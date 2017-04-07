@@ -33,6 +33,11 @@ class MoneyBagsController < ApplicationController
     end
   end
 
+  def getBagId
+    @bag_details=MoneyBag.where(:user_id=>params[:user_id]).first
+    Rails.logger.debug "bag----#{@bag_details.inspect}"
+    render json: @bag_details
+  end
   # DELETE /money_bags/1
   def destroy
     @money_bag.destroy
@@ -47,5 +52,6 @@ class MoneyBagsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def money_bag_params
       params.fetch(:money_bag, {})
+      params.require(:money_bag).permit(:user_id, :available_credit, :expenses)
     end
 end
