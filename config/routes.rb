@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     get 'getItemsByUserId', on: :collection
   end  
   resources :orders  
+  end  
   resources :product_categories do
        get 'show_sub_category', on: :member
   end

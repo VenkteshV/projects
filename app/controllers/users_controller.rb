@@ -51,7 +51,6 @@ class UsersController < ApplicationController
     def user_params
       params.fetch(:user, {})
       params.require(:user).permit(:email, :encrypted_password, :username, :gender, :contact_no, :city, :state, :nationality)
-
     end
 
 end

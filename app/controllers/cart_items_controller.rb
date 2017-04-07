@@ -4,7 +4,6 @@ class CartItemsController < ApplicationController
   # GET /cart_items
   def index
     @cart_items = CartItem.where(:user_id=>params[:user_id])
-
     render json: @cart_items
   end
 

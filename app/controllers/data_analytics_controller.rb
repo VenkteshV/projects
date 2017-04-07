@@ -25,5 +25,4 @@ class DataAnalyticsController < ApplicationController
 	    @result1=ActiveRecord::Base.connection.execute(query).as_json
 	    render json: @result1
 	end
-
 end

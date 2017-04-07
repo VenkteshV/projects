@@ -6,7 +6,6 @@ class CreateCartItems < ActiveRecord::Migration[5.0]
       t.string :price
       t.string :image_url
       t.integer :user_id
-
       t.timestamps
     end
   end

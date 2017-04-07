@@ -35,7 +35,6 @@ class MoneyBagsController < ApplicationController
 
   def getBagId
     @bag_details=MoneyBag.where(:user_id=>params[:user_id]).first
-    Rails.logger.debug "bag----#{@bag_details.inspect}"
     render json: @bag_details
   end
   # DELETE /money_bags/1
